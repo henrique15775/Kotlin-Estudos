@@ -35,7 +35,7 @@ fun VerificarLetraInPalavra(letra: Char, palavra: String): Boolean{
         return palavra.contains(letra)
 }
 
-fun letrasDescobertas(palavra: List<String>, letras_reveladas: List<String>): String{
+fun letrasDescobertas(palavra: String, letras_reveladas: List<String>): String{
     /*var word_found = mutableListOf<String>()
     for(word in palavra){
         for(word_revealed in letras_reveladas){
@@ -46,7 +46,7 @@ fun letrasDescobertas(palavra: List<String>, letras_reveladas: List<String>): St
         }
     }*/
 
-    var str_words = palavra.joinToString().replace(",","").replace("/0","").replace(" ","")
+    var str_words = palavra
     for(word in str_words){
         var confirm = false
         for(word_revealed in letras_reveladas){
@@ -71,37 +71,67 @@ fun main(){
     println("Pessoa: ${pessoa.nome}")
     println("Pessoa: ${pessoa2.nome}")
         */
+    var qnt_erros = 0
     var pal = ObterPalavraDica()
-    var lista_descoberto = listOf<String>("a")
-    var palavrinha = listOf<String>("c","a","s","a")
-    //val list_pal: Array<String> = pal[0].split(
+    var lista_descoberto = mutableListOf<String>()
     val delim = ""
-    println(lista_descoberto.toString())
-    println(palavrinha.toString())
-    println(letrasDescobertas( palavrinha,lista_descoberto))
     val list = pal[0].split(delim)
-    /*var alt_list =list.joinToString().replace(",","").replace("/0","").replace(" ","")
-    for(word in alt_list) {
+    var palavraSorteada =  list.joinToString().replace(",","").replace("/0","").replace(" ","")
+    while(true) {
+        println("Jogo da Forca! \n Tentativas restantes:${qnt_erros + 6}")
+
+        //var palavrinha = listOf<String>("c", "a", "s", "a")
+        //val list_pal: Array<String> = pal[0].split(
+
+        /*println(lista_descoberto.toString())
+    println(palavrinha.toString())
+    println(letrasDescobertas( palavrinha,lista_descoberto))*/
+
+        println(letrasDescobertas(palavraSorteada,lista_descoberto))
+        print("-> ")
+        var acertou = false
+        var adivinhar = readLine()
+        if (adivinhar != null) {
+            for(word in adivinhar){
+                if(palavraSorteada.contains(word.toString()) && lista_descoberto.contains(word.toString()) == false){
+                    println("Palavra ...")
+                    lista_descoberto.add(word.toString())
+                    println(lista_descoberto.toString())
+                    acertou = true
+                }else{
+                    acertou = false
+                }
+            }
+        }
+        if(acertou == false){
+            qnt_erros = qnt_erros - 1
+        }
+        if(qnt_erros <= -6){
+            println("VOCE PERDEUUUUUU :(")
+            break
+        }
+        /*for(word in alt_list) {
         println(word)
     }*/
 
-    //pal[0] = pal[0].replace('a','o')
-    //println(pal[0])
-    //var vetor = mutableListOf<String>()
-    println("Quantidade de letras distintas -> ${retornarQuantidadeDeLetrasDistintas(list)}")
-    /*for(word in list){
+        //pal[0] = pal[0].replace('a','o')
+        //println(pal[0])
+        //var vetor = mutableListOf<String>()
+        //println("Quantidade de letras distintas -> ${retornarQuantidadeDeLetrasDistintas(list)}")
+        /*for(word in list){
         if(word != "/0" && word != "") {
             vetor.add(word)
             println(word + "-")
         }
     }*/
-    //println(vetor.toString())
-    println(list.size)
-    println(pal[0].contains('a'))
-    println(pal[0].length)
+        //println(vetor.toString())
+        //println(list.size)
+        //println(pal[0].contains('a'))
+        //println(pal[0].length)
 
-    var str: String? = readLine()
+        //var str: String? = readLine()
 
+    }
 }
 
 /*
@@ -110,9 +140,9 @@ fun main(){
 * fun retornarQuantidadeDeLetras(){} - Done
 * fun retornarQuantidadeDeLetrasDistintas(){} - Done
 * fun VerificarLetraInPalavra(){} - Done
-* fun letrasDescobertas(){} -
-* fun retornarStatusDaPalavra(){}
-* fun Gerenciar Quantidade de tentativas
+* fun letrasDescobertas(){} - Done
+* fun retornarStatusDaPalavra(){} -
+* fun Gerenciar Quantidade de tentativas -
 *
 *
 * */
